@@ -19,7 +19,7 @@ public class ResponseObject {
     public Coord coord;
     @SerializedName("weather")
     @Expose
-    public List<Weather> weather = new ArrayList<Weather>();
+    public List<Weather> weather = new ArrayList<>();
     @SerializedName("base")
     @Expose
     public String base;

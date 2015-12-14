@@ -1,7 +1,6 @@
 package com.nookdev.weathertesttask;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.nookdev.weathertesttask.api.OpenWeatherApi;
@@ -11,6 +10,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 String currentUrlString = chain.request().urlString();
                 Request request = chain.request()
                         .newBuilder()
-                        .url(currentUrlString + "&appid=" + APPID)
+                        .url(currentUrlString + "&lang="+getLocale()+ "&units=metric" + "&appid=" + APPID)
                         .build();
                 return chain.proceed(request);
             }
@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Response<ResponseObject> response, Retrofit retrofit) {
                 ResponseObject weatherData = response.body();
-                Snackbar.make(findViewById(R.id.rl),"got result",Snackbar.LENGTH_LONG).show();
             }
 
             @Override
@@ -64,7 +63,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-    };
+    }
+
+    private String getLocale(){
+        return Locale.getDefault().getLanguage();
+    }
 
 
 }
