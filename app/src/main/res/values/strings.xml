@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WeatherTestTask</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="search">search</string>
 </resources>
