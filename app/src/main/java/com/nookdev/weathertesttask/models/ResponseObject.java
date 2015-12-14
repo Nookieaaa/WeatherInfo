@@ -48,4 +48,47 @@ public class ResponseObject {
     @Expose
     public Integer cod;
 
+    public Coord getCoord() {
+        return coord;
+    }
+
+    public List<Weather> getWeather() {
+        return weather;
+    }
+
+    public String getBase() {
+        return base;
+    }
+
+    public Main getMain() {
+        return main;
+    }
+
+    public Wind getWind() {
+        return wind;
+    }
+
+    public Clouds getClouds() {
+        return clouds;
+    }
+
+    public Integer getDt() {
+        return dt;
+    }
+
+    public Sys getSys() {
+        return sys;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getCod() {
+        return cod;
+    }
 }
