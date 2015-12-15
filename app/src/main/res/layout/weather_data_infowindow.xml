@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:card="http://schemas.android.com/tools"
+    card:elevation="10dp"
+    card:corner_radius="20dp"
+    android:background="#ffffff">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:id="@+id/weather_marker"
+        android:padding="20dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/weather_marker_image"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:minHeight="100dp"
+            android:minWidth="100dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20 C"
+            android:id="@+id/weather_marker_temp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/weather_marker_image"
+            android:layout_toEndOf="@+id/weather_marker_image"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wind: 20"
+            android:id="@+id/weather_marker_wind"
+            android:layout_below="@+id/weather_marker_temp"
+            android:layout_toRightOf="@+id/weather_marker_image"
+            android:layout_toEndOf="@+id/weather_marker_image" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cloudiness : clear"
+            android:id="@+id/weather_marker_cloud"
+            android:layout_below="@+id/weather_marker_wind"
+            android:layout_toRightOf="@+id/weather_marker_image"
+            android:layout_toEndOf="@+id/weather_marker_image" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pressure 2000"
+            android:id="@+id/weather_marker_pressure"
+            android:layout_below="@+id/weather_marker_cloud"
+            android:layout_toRightOf="@+id/weather_marker_image"
+            android:layout_toEndOf="@+id/weather_marker_image" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Humidity"
+            android:id="@+id/weather_marker_hum"
+            android:layout_below="@+id/weather_marker_pressure"
+            android:layout_toRightOf="@+id/weather_marker_image"
+            android:layout_toEndOf="@+id/weather_marker_image" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sunrise"
+            android:id="@+id/weather_marker_sunrise"
+            android:layout_below="@+id/weather_marker_hum"
+            android:layout_toRightOf="@+id/weather_marker_image"
+            android:layout_toEndOf="@+id/weather_marker_image" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sunset"
+            android:id="@+id/weather_marker_sunset"
+            android:layout_below="@+id/weather_marker_sunrise"
+            android:layout_toRightOf="@+id/weather_marker_image"
+            android:layout_toEndOf="@+id/weather_marker_image" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

@@ -1,14 +1,21 @@
 package com.nookdev.weathertesttask.models;
 
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.nookdev.weathertesttask.App;
 import com.nookdev.weathertesttask.models.pojo.Clouds;
 import com.nookdev.weathertesttask.models.pojo.Coord;
 import com.nookdev.weathertesttask.models.pojo.Main;
 import com.nookdev.weathertesttask.models.pojo.Sys;
 import com.nookdev.weathertesttask.models.pojo.Weather;
 import com.nookdev.weathertesttask.models.pojo.Wind;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,37 +23,40 @@ import java.util.List;
 public class ResponseObject {
     @SerializedName("coord")
     @Expose
-    public Coord coord;
+    private Coord coord;
     @SerializedName("weather")
     @Expose
-    public List<Weather> weather = new ArrayList<>();
+    private List<Weather> weather = new ArrayList<>();
     @SerializedName("base")
     @Expose
-    public String base;
+    private String base;
     @SerializedName("main")
     @Expose
-    public Main main;
+    private Main main;
     @SerializedName("wind")
     @Expose
-    public Wind wind;
+    private Wind wind;
     @SerializedName("clouds")
     @Expose
-    public Clouds clouds;
+    private Clouds clouds;
     @SerializedName("dt")
     @Expose
-    public Integer dt;
+    private Integer dt;
     @SerializedName("sys")
     @Expose
-    public Sys sys;
+    private Sys sys;
     @SerializedName("id")
     @Expose
-    public Integer id;
+    private Integer id;
     @SerializedName("name")
     @Expose
-    public String name;
+    private String name;
     @SerializedName("cod")
     @Expose
-    public Integer cod;
+    private Integer cod;
+    private DataReady mDataReadyListener;
+
+    private final ImageHolder imageHolder = new ImageHolder();
 
     public Coord getCoord() {
         return coord;
@@ -91,4 +101,60 @@ public class ResponseObject {
     public Integer getCod() {
         return cod;
     }
+
+    public void loadImage(){
+        imageHolder.requestImage();
+    }
+
+    public Bitmap getBitmap(){
+        return imageHolder.getBitmap();
+    }
+
+    public void setDataReadyListener(DataReady listener){
+        mDataReadyListener = listener;
+        imageHolder.requestImage();
+    }
+
+    private void notifyDataLoaded(){
+        if(mDataReadyListener!=null){
+            mDataReadyListener.onDataReceived(this);
+        }
+    }
+
+
+    private class ImageHolder implements Target {
+
+        private Bitmap icon;
+
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            icon = bitmap;
+            notifyDataLoaded();
+        }
+
+        @Override
+        public void onBitmapFailed(Drawable errorDrawable) {
+            icon = null;
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
+            icon = null;
+        }
+
+        public void requestImage(){
+            Picasso.with(App.getAppContext()).load("http://openweathermap.org/img/w/03d.png").into(this);
+        }
+
+        @Nullable
+        public Bitmap getBitmap(){
+            return icon;
+        }
+    }
+
+    //to notify when image is loaded
+    public interface DataReady{
+        public void onDataReceived(ResponseObject responseObject);
+    }
+
 }
