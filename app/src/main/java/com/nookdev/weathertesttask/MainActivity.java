@@ -1,9 +1,11 @@
 package com.nookdev.weathertesttask;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @OnClick (R.id.btn_search)
     public void setBtnSearchClick(View v){
+        hideSoftKeyboard();
         performSearch();
     }
 
@@ -60,6 +63,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         queryWeather(query);
     }
 
+    public void hideSoftKeyboard(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
 
 
     @Override
@@ -128,9 +138,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             @Override
             public void onFailure(Throwable t) {
-                Toast.makeText(getParent(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                notifyError();
             }
         });
+    }
+
+    public void notifyError(){
+        Toast.makeText(this, R.string.network_error, Toast.LENGTH_SHORT).show();
     }
 
     private String getLocale(){
@@ -146,14 +160,24 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.clear();
         windowInfoAdapter.update(weatherData);
         //BitmapDescriptor bdf = BitmapDescriptorFactory.fromBitmap(weatherData.getBitmap());
-        Marker marker = mMap.addMarker(
+        final Marker marker = mMap.addMarker(
                 new MarkerOptions()
                         .position(newPos)
                         //.icon(bdf)
                         .title(weatherData.getName())
         );
         CameraPosition cameraPosition = new CameraPosition.Builder().target(newPos).zoom(7f).build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1000, new GoogleMap.CancelableCallback() {
+            @Override
+            public void onFinish() {
+                marker.showInfoWindow();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
     }
 
 

@@ -124,6 +124,9 @@ public class ResponseObject {
 
     private class ImageHolder implements Target {
 
+        public static final String TARGET_ICON_URL = "http://openweathermap.org/img/w/";
+        public static final String ICON_EXT = ".png";
+
         private Bitmap icon;
 
         @Override
@@ -143,7 +146,7 @@ public class ResponseObject {
         }
 
         public void requestImage(){
-            Picasso.with(App.getAppContext()).load("http://openweathermap.org/img/w/03d.png").into(this);
+            Picasso.with(App.getAppContext()).load(TARGET_ICON_URL + "04" + ICON_EXT).into(this);
         }
 
         @Nullable

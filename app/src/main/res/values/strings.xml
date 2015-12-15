@@ -4,4 +4,11 @@
     <string name="search">search</string>
     <string name="search_hint">Enter city name</string>
     <string name="network_error">Network error, try again later</string>
+
+    <!-- infowindow -->
+    <string name="temp">Temperature : %d C</string>
+    <string name="wind">%d m/s</string>
+    <string name="pressure">%d hpa</string>
+    <string name="humidity">%d%</string>
+
 </resources>
