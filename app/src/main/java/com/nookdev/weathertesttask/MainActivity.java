@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public static final String APPID = "25908398e09c807a0023e7c4f387d1e6";
     private GoogleMap mMap;
     private CustomWindowInfoAdapter windowInfoAdapter;
+    public static final String REQUERY_STATE_KEY = "requery";
+    String lastQuery;
 
     @Bind (R.id.btn_search)
     ImageButton btnSearch;
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Toast.makeText(this, "no query data",Toast.LENGTH_SHORT).show();
             return;
         }
+        lastQuery = query;
         queryWeather(query);
     }
 
@@ -90,6 +93,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        if (savedInstanceState!=null && savedInstanceState.containsKey(REQUERY_STATE_KEY)){
+                lastQuery = savedInstanceState.getString(REQUERY_STATE_KEY);
+            }
+
     }
 
     private void setupMap() {
@@ -144,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void notifyError(){
-        Toast.makeText(this, R.string.network_error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
     }
 
     private String getLocale(){
@@ -155,15 +162,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         weatherData.setDataReadyListener(this);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(REQUERY_STATE_KEY,lastQuery);
+    }
+
     public void dataReceived(ResponseObject weatherData){
         LatLng newPos = new LatLng(weatherData.getCoord().getLat(),weatherData.getCoord().getLon());
         mMap.clear();
         windowInfoAdapter.update(weatherData);
-        //BitmapDescriptor bdf = BitmapDescriptorFactory.fromBitmap(weatherData.getBitmap());
         final Marker marker = mMap.addMarker(
                 new MarkerOptions()
                         .position(newPos)
-                        //.icon(bdf)
                         .title(weatherData.getName())
         );
         CameraPosition cameraPosition = new CameraPosition.Builder().target(newPos).zoom(7f).build();
@@ -185,6 +196,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         setupMap();
+        if(lastQuery!=null){
+            queryWeather(lastQuery);
+        }
     }
 
     @Override

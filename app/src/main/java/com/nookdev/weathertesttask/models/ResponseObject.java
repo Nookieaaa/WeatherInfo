@@ -2,6 +2,7 @@ package com.nookdev.weathertesttask.models;
 
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 
@@ -137,7 +138,7 @@ public class ResponseObject {
 
         @Override
         public void onBitmapFailed(Drawable errorDrawable) {
-            icon = null;
+            icon = ((BitmapDrawable)errorDrawable).getBitmap();
         }
 
         @Override
@@ -146,11 +147,12 @@ public class ResponseObject {
         }
 
         public void requestImage(){
-            Picasso.with(App.getAppContext()).load(TARGET_ICON_URL + "04" + ICON_EXT).into(this);
+            if (getWeather().size()>0)
+                Picasso.with(App.getAppContext()).load(TARGET_ICON_URL + getWeather().get(0).getIcon() + ICON_EXT).into(this);
         }
 
         @Nullable
-        public Bitmap getBitmap(){
+        public Bitmap getBitmap() throws NullPointerException{
             return icon;
         }
     }

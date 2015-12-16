@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WeatherTestTask</string>
+    <string name="clouds">Хмарнiсть: %1$d %2$s</string>
+    <string name="condition">Стан</string>
+    <string name="description">Опис</string>
+    <string name="temp_minmax">Мiн:%1$d / Макс:%2$d</string>
+    <string name="search_hint">Введiть назву мiста</string>
+    <string name="search">Пошук</string>
+    <string name="pressure">Тиск: %d (hpa)</string>
+    <string name="humidity">Вологiсть: %1$d %2$s</string>
+    <string name="error">Помилка запиту, перевiрте правопис та наявнiсть iнтернету</string>
+    <string name="wind">Вiтер: %1$d(м/с), %2$d град.</string>
+</resources>

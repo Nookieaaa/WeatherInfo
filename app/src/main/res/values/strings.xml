@@ -1,14 +1,20 @@
 <resources>
     <string name="app_name">WeatherTestTask</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps" translatable="false">Map</string>
     <string name="search">search</string>
     <string name="search_hint">Enter city name</string>
-    <string name="network_error">Network error, try again later</string>
+    <string name="error">Request error, check spelling and network status</string>
 
     <!-- infowindow -->
-    <string name="temp">Temperature : %d C</string>
-    <string name="wind">%d m/s</string>
-    <string name="pressure">%d hpa</string>
-    <string name="humidity">%d%</string>
+    <string name="temp" translatable="false">%d C</string>
+    <string name="location" translatable="false">%1$s,%2$s</string>
+    <string name="description">Description</string>
+    <string name="condition">Condition</string>
+    <string name="temp_minmax">Min:%1$d / Max:%2$d</string>
+    <string name="pressure">Pressure: %d (hpa)</string>
+    <string name="humidity">Humidity: %1$d %2$s</string>
+    <string name="clouds">Clouds: %1$d %2$s</string>
+    <string name="wind">Wind: %1$d(m/s), %2$d deg</string>
+
 
 </resources>
