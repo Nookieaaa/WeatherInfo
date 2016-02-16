@@ -176,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 new MarkerOptions()
                         .position(newPos)
                         .title(weatherData.getName())
+                //.icon(BitmapDescriptorFactory.fromBitmap());
         );
         CameraPosition cameraPosition = new CameraPosition.Builder().target(newPos).zoom(7f).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1000, new GoogleMap.CancelableCallback() {
