@@ -11,7 +11,7 @@
     <string name="description">Description</string>
     <string name="condition">Condition</string>
     <string name="temp_minmax">Min:%1$d / Max:%2$d</string>
-    <string name="pressure">Pressure: %d (hpa)</string>
+    <string name="pressure">Pressure: %f (hpa)</string>
     <string name="humidity">Humidity: %1$d %2$s</string>
     <string name="clouds">Clouds: %1$d %2$s</string>
     <string name="wind">Wind: %1$d(m/s), %2$d deg</string>

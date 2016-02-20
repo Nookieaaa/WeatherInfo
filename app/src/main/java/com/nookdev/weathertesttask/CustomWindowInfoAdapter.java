@@ -74,7 +74,7 @@ public class CustomWindowInfoAdapter implements GoogleMap.InfoWindowAdapter {
 
         tempMinMax.setText(String.format(res.getString(R.string.temp_minmax), tempMin, tempMax));
         condition.setText(weatherData.getWeather().get(0).getDescription());
-        pressure.setText(String.format(res.getString(R.string.pressure), weatherData.getMain().getPressure()));
+        pressure.setText(String.format(res.getString(R.string.pressure), 0));//(int)weatherData.getMain().getPressure()));
         humidity.setText(String.format(res.getString(R.string.humidity), weatherData.getMain().getHumidity(),"%"));
 
         wind.setText(String.format(res.getString(R.string.wind), weatherData.getWind().getSpeed().intValue(), weatherData.getWind().getDeg().intValue()));

@@ -1,7 +1,9 @@
 package com.nookdev.weathertesttask;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,10 +16,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.ui.IconGenerator;
 import com.nookdev.weathertesttask.api.OpenWeatherApi;
 import com.nookdev.weathertesttask.models.ResponseObject;
 import com.squareup.okhttp.Interceptor;
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private CustomWindowInfoAdapter windowInfoAdapter;
     public static final String REQUERY_STATE_KEY = "requery";
     String lastQuery;
+    Handler h = new Handler();
 
     @Bind (R.id.btn_search)
     ImageButton btnSearch;
@@ -111,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.getUiSettings().setZoomGesturesEnabled(true);
 
         windowInfoAdapter = new CustomWindowInfoAdapter();
-        mMap.setInfoWindowAdapter(windowInfoAdapter);
+        //mMap.setInfoWindowAdapter(windowInfoAdapter);
     }
 
     public void queryWeather(String city){
@@ -165,24 +170,26 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(REQUERY_STATE_KEY,lastQuery);
+        outState.putString(REQUERY_STATE_KEY, lastQuery);
     }
 
     public void dataReceived(ResponseObject weatherData){
         LatLng newPos = new LatLng(weatherData.getCoord().getLat(),weatherData.getCoord().getLon());
         mMap.clear();
-        windowInfoAdapter.update(weatherData);
-        final Marker marker = mMap.addMarker(
-                new MarkerOptions()
-                        .position(newPos)
-                        .title(weatherData.getName())
+        mMap.setOnMarkerClickListener(marker -> {
+            //Toast.makeText(MainActivity.this,"click",Toast.LENGTH_SHORT).show();
+            //marker.setIcon(addContentView(););
+            return true;
+        });
+        //windowInfoAdapter.update(weatherData);
+        final Marker marker = mMap.addMarker(createMarker(weatherData, newPos)
                 //.icon(BitmapDescriptorFactory.fromBitmap());
         );
         CameraPosition cameraPosition = new CameraPosition.Builder().target(newPos).zoom(7f).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1000, new GoogleMap.CancelableCallback() {
             @Override
             public void onFinish() {
-                marker.showInfoWindow();
+                //marker.showInfoWindow();
             }
 
             @Override
@@ -190,6 +197,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             }
         });
+    }
+
+
+    private MarkerOptions createMarker(ResponseObject weatherData, LatLng newPos){
+        MarkerOptions marker = new MarkerOptions();
+
+        /*new MarkerOptions()
+                .position(newPos)
+                .title(weatherData.getName());*/
+
+        IconGenerator generator = new IconGenerator(this);
+        //generator.setContentView(View.inflate(this,R.layout.custom,null));
+        //generator.setBackground(getResources().getDrawable(R.drawable.circle));
+        Bitmap bm = generator.makeIcon("test");
+
+        return marker.icon(BitmapDescriptorFactory.fromBitmap(bm)).position(newPos);
     }
 
 
